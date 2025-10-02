@@ -1,8 +1,41 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charse                <div class="col-md-10">
+                    <div class="family-section p-3 mb-3">
+                        <h4 class="family-title mb-3">Dettagli Famiglia</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <select class="form-select" id="tipoPartecipazione" name="tipoPartecipazione" required>
+                                        <option value="">Scegli...</option>
+                                        <option value="singolo">Partecipo da solo</option>
+                                        <option value="famiglia">Partecipo con la famiglia</option>
+                                    </select>
+                                    <label for="tipoPartecipazione">Tipo di partecipazione</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="numeroPersione" name="numeroPersone" min="1" max="10" value="1">
+                                    <label for="numeroPersione">Numero totale persone</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="dettagliFamily" name="dettagliFamily" placeholder="Dettagli famiglia" style="height: 100px"></textarea>
+                        <label for="dettagliFamily">Nomi e età dei componenti della famiglia</label>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="note" name="note" placeholder="Note" style="height: 100px"></textarea>
+                        <label for="note">Note (allergie, intolleranze o altre informazioni)</label>
+                    </div>
+                </div>    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Invito al matrimonio di Antonino e Martina - 27 Giugno 2026">
     <meta name="keywords" content="matrimonio, wedding, Antonino, Martina, Caltagirone">
     <meta property="og:title" content="Matrimonio Antonino & Martina">
@@ -60,7 +93,7 @@
                 <div class="col-md-10">
                     <div class="form-floating">
                         <input type="number" class="form-control" id="accompagnatori" name="accompagnatori" min="0" max="5" value="0">
-                        <label for="accompagnatori">Numero di accompagnatori</label>
+                        <label for="accompagnatori">Numero di persone</label>
                     </div>
                 </div>
                 <div class="col-md-10">
@@ -93,6 +126,22 @@
     <script src="bootstrap.bundle.js"></script>
 
     <script>
+        // Gestione visibilità campi famiglia
+        const tipoPartecipazione = document.getElementById('tipoPartecipazione');
+        const dettagliFamilyContainer = document.getElementById('dettagliFamily').closest('.col-md-10');
+        
+        // Nascondi inizialmente il campo dettagli famiglia
+        dettagliFamilyContainer.style.display = 'none';
+        
+        tipoPartecipazione.addEventListener('change', function() {
+            if (this.value === 'famiglia') {
+                dettagliFamilyContainer.style.display = 'block';
+            } else {
+                dettagliFamilyContainer.style.display = 'none';
+                document.getElementById('dettagliFamily').value = '';
+            }
+        });
+
         // Generazione QR Code
         const qrcode = new QRCode("qrcode", {
             text: "https://duca9-cpu.github.io/Biglietto-Matrimonio-Antonino-Martina/",
@@ -115,7 +164,9 @@
             const data = {
                 nome: form.nome.value,
                 presenza: form.presenza.value,
-                accompagnatori: form.accompagnatori.value,
+                tipoPartecipazione: form.tipoPartecipazione.value,
+                numeroPersone: form.numeroPersone.value,
+                dettagliFamily: form.dettagliFamily.value,
                 note: form.note.value,
                 dataInvio: new Date().toISOString()
             };
