@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Invito al matrimonio di Antonino e Martina - 27 Giugno 2026">
+    <meta name="keywords" content="matrimonio, wedding, Antonino, Martina, Caltagirone">
+    <meta property="og:title" content="Matrimonio Antonino & Martina">
+    <meta property="og:description" content="Invito al matrimonio di Antonino e Martina - 27 Giugno 2026">
+    <title>Matrimonio Antonino & Martina</title>
+    
+    <!-- Bootstrap CSS locale -->
+    <link href="bootstrap.css" rel="stylesheet">
+    <!-- CSS personalizzato -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container text-center py-5">
+         <img src="images/481073879_2088949674899599_7389138159625559070_n.jpg" 
+         alt="Antonino & Martina" 
+         class="img-fluid mb-4" 
+         style="max-height: 250px; border-radius: 15px;">
+        <h1 class="mb-3">Matrimonio di Antonino & Martina</h1>
+        <p class="lead">27 Giugno 2026 - ore 16:00</p>
+        <p>Chiesa di Santa Maria di Gesù, Caltagirone</p>
+        
+        <!-- Mappa ottimizzata -->
+        <div class="ratio ratio-16x9 mb-4">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3160.850348149558!2d14.516026!3d37.223723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13110fb4d02ac387%3A0xa1b9a2f3ec5eb90b!2sChiesa%20Parrocchiale%20di%20Santa%20Maria%20di%20Ges%C3%B9%20dei%20Frati%20Minori!5e0!3m2!1sit!2sit!4v1696212345678!5m2!1sit!2sit" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+        
+        <!-- RSVP form -->
+        <h3 class="mb-3">Conferma la tua presenza</h3>
+        <form id="rsvpForm" class="row g-3 justify-content-center">
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="nome" placeholder="Il tuo nome" required>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" name="presenza" required>
+                    <option value="">Seleziona...</option>
+                    <option>Partecipo</option>
+                    <option>Non posso</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" name="note" placeholder="Note (allergie, accompagnatori, indicazioni...)">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary">Invia</button>
+            </div>
+        </form>
+
+        <div id="msg" class="mt-3"></div>
+    </div>
+
+    <div class="mt-4">
+    <p>Scansiona per aprire l'invito:</p>
+    <!-- Sostituisci questo URL con l'URL pubblico del tuo sito quando sarà online -->
+    <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=https://esempio.com/invito" 
+         alt="QR Code invito" 
+         style="width:200px; height:200px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1); display:block; margin:auto;">
+</div>
+
+
+    <!-- Bootstrap JS locale -->
+    <script src="bootstrap.bundle.js"></script>
+
+    <script>
+        const form = document.getElementById('rsvpForm');
+        const msg = document.getElementById('msg');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = {
+                nome: form.nome.value,
+                presenza: form.presenza.value,
+                note: form.note.value
+            };
+
+            // Sostituisci questo URL con il tuo endpoint Google Apps Script quando sarà pronto
+            fetch("https://script.google.com/macros/s/YOUR-SCRIPT-ID/exec", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.text())
+            .then(() => {
+                msg.innerHTML = "<div class='alert alert-success'>Grazie! La tua risposta è stata registrata.</div>";
+                form.reset();
+            })
+            .catch(() => {
+                msg.innerHTML = "<div class='alert alert-danger'>Errore, riprova più tardi.</div>";
+            });
+        });
+    </script>
+
+</body>
+</html>
