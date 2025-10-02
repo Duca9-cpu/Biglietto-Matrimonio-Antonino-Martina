@@ -109,6 +109,20 @@ form button:hover {
     margin-top: 15px;
 }
 
+/* QR Code styling */
+#qrcode {
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#qrcode img {
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     h1 {
