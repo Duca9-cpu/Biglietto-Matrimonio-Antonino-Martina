@@ -97,6 +97,20 @@ form button {
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
+/* QR Code styling */
+#qrcode {
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#qrcode img {
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+}
+
 form button:hover {
     background-color: #a35338;
 }
