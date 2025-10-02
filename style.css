@@ -69,36 +69,108 @@ img {
   margin-bottom: 40px;
 }
 
-/* Form RSVP */
-form input,
-form select {
-  border-radius: 15px;
-  border: 1px solid #ccc;
-  padding: 12px 15px;
-  margin-bottom: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
+/* RSVP Section */
+.rsvp-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(199, 107, 76, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
 }
 
-form input:focus,
-form select:focus {
-  border-color: #c76b4c;
-  box-shadow: 0 0 8px rgba(199, 107, 76, 0.5);
-  outline: none;
+.rsvp-section::before,
+.rsvp-section::after {
+    content: '❦';
+    font-size: 24px;
+    color: #c76b4c;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* Pulsante */
-form button {
-  border-radius: 50px;
-  padding: 12px 35px;
-  font-size: 1.1rem;
-  background-color: #c76b4c;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+.rsvp-section::before {
+    top: 15px;
+}
+
+.rsvp-section::after {
+    bottom: 15px;
+}
+
+.rsvp-title {
+    font-family: 'Great Vibes', cursive;
+    color: #c76b4c;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.rsvp-subtitle {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+/* Form styling */
+.form-floating {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.form-control, .form-select {
+    height: 60px;
+    border-radius: 15px;
+    border: 2px solid rgba(199, 107, 76, 0.2);
+    padding: 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #c76b4c;
+    box-shadow: 0 0 0 0.2rem rgba(199, 107, 76, 0.25);
+    outline: none;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-floating label {
+    padding: 1rem;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+    color: #c76b4c;
+}
+
+/* Submit button */
+.btn-rsvp {
+    background-color: #c76b4c;
+    color: white;
+    padding: 12px 35px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(199, 107, 76, 0.3);
+}
+
+.btn-rsvp:hover {
+    background-color: #a35338;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(199, 107, 76, 0.4);
+}
+
+.btn-rsvp:active {
+    transform: translateY(0);
 }
 
 /* QR Code section styling */
@@ -183,10 +255,44 @@ form button:hover {
 
 /* Messaggi RSVP */
 #msg .alert {
-  border-radius: 12px;
-  font-size: 1rem;
-  text-align: center;
-  margin-top: 15px;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#msg .alert-success {
+    background: rgba(220, 242, 231, 0.95);
+    border-left: 4px solid #28a745;
+}
+
+#msg .alert-danger {
+    background: rgba(248, 215, 218, 0.95);
+    border-left: 4px solid #dc3545;
+}
+
+#msg .alert h4 {
+    color: #c76b4c;
+    margin-bottom: 10px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+}
+
+#msg .alert p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Fade animation for alerts */
+.fade {
+    opacity: 0;
+    transition: opacity 0.3s linear;
+}
+
+.fade.show {
+    opacity: 1;
 }
 
 /* Responsive */

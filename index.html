@@ -11,6 +11,8 @@
     
     <!-- Bootstrap CSS locale -->
     <link href="bootstrap.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- CSS personalizzato -->
     <link href="style.css" rel="stylesheet">
 </head>
@@ -34,27 +36,49 @@
         </div>
         
         <!-- RSVP form -->
-        <h3 class="mb-3">Conferma la tua presenza</h3>
-        <form id="rsvpForm" class="row g-3 justify-content-center">
-            <div class="col-md-4">
-                <input type="text" class="form-control" name="nome" placeholder="Il tuo nome" required>
-            </div>
-            <div class="col-md-4">
-                <select class="form-select" name="presenza" required>
-                    <option value="">Seleziona...</option>
-                    <option>Partecipo</option>
-                    <option>Non posso</option>
-                </select>
-            </div>
-            <div class="col-md-8">
-                <input type="text" class="form-control" name="note" placeholder="Note (allergie, accompagnatori, indicazioni...)">
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary">Invia</button>
-            </div>
-        </form>
+        <div class="rsvp-section mt-5 mb-4">
+            <h3 class="rsvp-title">✧ Conferma la tua presenza ✧</h3>
+            <p class="rsvp-subtitle">Ci aiuterai a organizzare al meglio questo giorno speciale</p>
+            
+            <form id="rsvpForm" class="row g-3 justify-content-center">
+                <div class="col-md-5">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Il tuo nome" required>
+                        <label for="nome">Il tuo nome</label>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-floating">
+                        <select class="form-select" id="presenza" name="presenza" required>
+                            <option value="">Scegli...</option>
+                            <option value="si">Con gioia parteciperò</option>
+                            <option value="no">Mi dispiace, non potrò esserci</option>
+                        </select>
+                        <label for="presenza">Parteciperai?</label>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="accompagnatori" name="accompagnatori" min="0" max="5" value="0">
+                        <label for="accompagnatori">Numero di accompagnatori</label>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-floating">
+                        <textarea class="form-control" id="note" name="note" placeholder="Note" style="height: 100px"></textarea>
+                        <label for="note">Note (allergie, intolleranze o altre informazioni)</label>
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-rsvp">
+                        <span>Invia conferma</span>
+                        <i class="fas fa-heart ms-2"></i>
+                    </button>
+                </div>
+            </form>
 
-        <div id="msg" class="mt-3"></div>
+            <div id="msg" class="mt-4"></div>
+        </div>
     </div>
 
     <div class="qr-section mt-5">
@@ -84,11 +108,16 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Invio in corso...</span>';
 
             const data = {
                 nome: form.nome.value,
                 presenza: form.presenza.value,
-                note: form.note.value
+                accompagnatori: form.accompagnatori.value,
+                note: form.note.value,
+                dataInvio: new Date().toISOString()
             };
 
             // Sostituisci questo URL con il tuo endpoint Google Apps Script quando sarà pronto
@@ -101,11 +130,31 @@
             })
             .then(res => res.text())
             .then(() => {
-                msg.innerHTML = "<div class='alert alert-success'>Grazie! La tua risposta è stata registrata.</div>";
+                msg.innerHTML = `
+                    <div class='alert alert-success fade show'>
+                        <h4>Grazie ${data.nome}!</h4>
+                        <p>La tua risposta è stata registrata con successo.</p>
+                        ${data.presenza === 'si' ? 
+                            `<p>Non vediamo l'ora di festeggiare insieme!</p>` : 
+                            `<p>Ci dispiace che non potrai essere presente.</p>`
+                        }
+                    </div>`;
                 form.reset();
             })
             .catch(() => {
-                msg.innerHTML = "<div class='alert alert-danger'>Errore, riprova più tardi.</div>";
+                msg.innerHTML = `
+                    <div class='alert alert-danger fade show'>
+                        <h4>Oops!</h4>
+                        <p>Si è verificato un errore durante l'invio.</p>
+                        <p>Per favore, riprova tra qualche momento.</p>
+                    </div>`;
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Invia conferma</span><i class="fas fa-heart ms-2"></i>';
+                
+                // Scroll to message
+                msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
         });
     </script>
