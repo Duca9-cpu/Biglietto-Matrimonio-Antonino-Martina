@@ -104,13 +104,17 @@ form button {
 /* QR Code section styling */
 .qr-section {
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px 20px;
+    padding: 40px 20px 30px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(199, 107, 76, 0.1);
     max-width: 600px;
     margin: 50px auto;
     position: relative;
     backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 .qr-section::before,
@@ -143,16 +147,23 @@ form button {
     color: #666;
     font-size: 1.1rem;
     font-style: italic;
-    margin-top: 20px;
     line-height: 1.6;
+    margin: 0;
+    text-align: center;
 }
 
 #qrcode {
+    width: 170px !important;
+    height: 170px !important;
     padding: 15px;
     background: white;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #qrcode:hover {
@@ -162,8 +173,8 @@ form button {
 #qrcode img {
     border-radius: 10px;
     display: block;
-    margin: auto;
-    width: 100%;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 form button:hover {
